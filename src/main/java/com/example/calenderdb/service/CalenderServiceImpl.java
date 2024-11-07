@@ -67,12 +67,14 @@ public class CalenderServiceImpl implements CalenderService {
 
         int updatedRow = calenderRepository.updateCalender(id, author, contents);
 
+        // 로우가 비어있는지 확인
         if(updatedRow == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data has been modified");
         }
 
         Calender calender = calenderRepository.findCalenderByIdOrElseThrow(id);
 
+        // 비밀번호가 같은지 검증
         if(!Objects.equals(calender.getPassword(),password)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The passwords are not the same.");
         }
@@ -87,7 +89,7 @@ public class CalenderServiceImpl implements CalenderService {
     public void deleteCalender(Long id, String password) {
 
         Calender calender = calenderRepository.findCalenderByIdOrElseThrow(id);
-
+        // 비밀번호가 맞는지 검증
         if(!Objects.equals(calender.getPassword(),password)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The passwords are not the same.");
         }
@@ -95,71 +97,11 @@ public class CalenderServiceImpl implements CalenderService {
         // calender 삭제
         int deletedRow = calenderRepository.deleteCalender(id);
 
+        // 로우가 비어 있는 지 확인
         if(deletedRow == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
 
-
-
-
     }
-
-
-//    @Override
-//    public CalenderResponseDto findCalenderById(Long id) {
-//
-//        Calender calender = calenderRepository.findCalenderById(id);
-//
-//        if(calender == null){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-//        }
-//
-//        return new CalenderResponseDto(calender);
-//    }
-//
-//    @Override
-//    public CalenderResponseDto updateCalender(Long id, String author, String contents, String password) {
-//
-//        Calender calender = calenderRepository.findCalenderById(id);
-//
-//        //NPE 방지
-//        if(calender == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-//        }
-//
-//        // 작성자와 할 일 수정
-//        if(author == null || contents == null) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The author and contents are required values.");
-//        }
-//
-//        //비밀번호가 같은 지 확인
-//        if(!Objects.equals(calender.getPassword(),password)) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The passwords are not the same.");
-//        }
-//
-//        calender.update(author, contents, password);
-//
-//        return new CalenderResponseDto(calender);
-//    }
-//
-//    @Override
-//    public void deleteCalender(Long id, String password) {
-//        Calender calender = calenderRepository.findCalenderById(id);
-//
-//        //calender의 key값을 id를 포함하고 있다면 그리고 요청받은 패스워드 값이 같다면.
-//        if(calender != null) {
-//
-//            if (Objects.equals(calender.getPassword(), password)) {
-//
-//                calenderRepository.deleteCalender(id);
-//            } else {
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The passwords are not the same.");
-//            }
-//
-//        } else {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-//        }
-//    }
-
 
 }
