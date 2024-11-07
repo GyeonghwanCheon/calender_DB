@@ -20,48 +20,49 @@ public class CalenderController {
         this.calenderService = calenderService;
     }
 
-    // 일정 생성
+    // 일정 생성 API
     @PostMapping
     public ResponseEntity<CalenderResponseDto> createCalender(@RequestBody CalenderRequestDto dto) {
 
         return new ResponseEntity<>(calenderService.saveCalender(dto) , HttpStatus.CREATED);
     }
-//
-//    // 일정 전체 조회
-//    @GetMapping
-//    public List<CalenderResponseDto> findAllCalenders() {
-//
-//        return calenderService.findAllCalenders();
-//    }
-//
-//
-//    // 일정 단건 조회
-//    @GetMapping("/{id}")
-//    public ResponseEntity <CalenderResponseDto> findCalenderById(@PathVariable Long id) {
-//
-//        return new ResponseEntity<>(calenderService.findCalenderById(id),HttpStatus.OK);
-//    }
-//
-//    // 일정 수정
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<CalenderResponseDto> updateTitle(
-//            @PathVariable Long id,
-//            @RequestBody CalenderRequestDto dto
-//    ) {
-//        return new ResponseEntity<>(calenderService.updateCalender(id,dto.getAuthor(),dto.getContents(),dto.getPassword()), HttpStatus.OK);
-//    }
-//
-//
-//    // 식별자 단건 삭제
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteCalender(
-//            @PathVariable Long id,
-//            @RequestBody CalenderRequestDto dto) {
-//
-//
-//        calenderService.deleteCalender(id, dto.getPassword());
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+
+    // 일정 전체 조회 API
+    @GetMapping
+    public List<CalenderResponseDto> findAllCalenders() {
+
+        return calenderService.findAllCalenders();
+    }
+
+
+    // 일정 단건 조회
+    @GetMapping("/{id}")
+    public ResponseEntity <CalenderResponseDto> findCalenderById(@PathVariable Long id) {
+
+        return new ResponseEntity<>(calenderService.findCalenderById(id),HttpStatus.OK);
+    }
+
+    // 일정 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<CalenderResponseDto> updateCalender(
+            @PathVariable Long id,
+            @RequestBody CalenderRequestDto dto
+    ) {
+
+        return new ResponseEntity<>(calenderService.updateCalender(id,dto.getAuthor(),dto.getContents(),dto.getPassword()), HttpStatus.OK);
+    }
+
+
+    // 식별자 단건 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCalender(
+            @PathVariable Long id,
+            @RequestBody CalenderRequestDto dto) {
+
+
+        calenderService.deleteCalender(id, dto.getPassword());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

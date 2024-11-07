@@ -6,12 +6,15 @@ import com.example.calenderdb.entity.Calender;
 import com.example.calenderdb.repository.CalenderRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class CalenderServiceImpl implements CalenderService {
@@ -40,13 +43,68 @@ public class CalenderServiceImpl implements CalenderService {
         return calenderRepository.saveCalender(calender);
     }
 
-//    @Override
-//    public List<CalenderResponseDto> findAllCalenders() {
-//        List<CalenderResponseDto> allCalenders = calenderRepository.findAllCalenders();
-//
-//        return allCalenders;
-//    }
-//
+    @Override
+    public List<CalenderResponseDto> findAllCalenders() {
+        return calenderRepository.findAllCalenders();
+    }
+
+
+    @Override
+    public CalenderResponseDto findCalenderById(Long id) {
+
+        Calender calender = calenderRepository.findCalenderByIdOrElseThrow(id);
+
+        return new CalenderResponseDto(calender);
+    }
+
+    @Transactional
+    @Override
+    public CalenderResponseDto updateCalender(Long id, String author, String contents, String password) {
+        //필수값 검증
+        if(author == null || contents == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        int updatedRow = calenderRepository.updateCalender(id, author, contents);
+
+        if(updatedRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data has been modified");
+        }
+
+        Calender calender = calenderRepository.findCalenderByIdOrElseThrow(id);
+
+        if(!Objects.equals(calender.getPassword(),password)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The passwords are not the same.");
+        }
+
+
+        return new CalenderResponseDto(calender);
+    }
+
+
+
+    @Override
+    public void deleteCalender(Long id, String password) {
+
+        Calender calender = calenderRepository.findCalenderByIdOrElseThrow(id);
+
+        if(!Objects.equals(calender.getPassword(),password)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The passwords are not the same.");
+        }
+
+        // calender 삭제
+        int deletedRow = calenderRepository.deleteCalender(id);
+
+        if(deletedRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+
+
+
+    }
+
+
 //    @Override
 //    public CalenderResponseDto findCalenderById(Long id) {
 //

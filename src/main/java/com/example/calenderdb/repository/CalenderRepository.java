@@ -10,9 +10,11 @@ public interface CalenderRepository {
 
     CalenderResponseDto saveCalender(Calender calender);
 
-//    List<CalenderResponseDto> findAllCalenders();
+    List<CalenderResponseDto> findAllCalenders();
+
+    Calender findCalenderByIdOrElseThrow(Long id);
+
+    int updateCalender(Long id, String author, String contents);
 //
-//    Calender findCalenderById(Long id);
-//
-//    void deleteCalender (Long id);
+    int deleteCalender (Long id);
 }
