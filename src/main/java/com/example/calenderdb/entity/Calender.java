@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 @Getter
 public class Calender {
 
-    @Setter
     private Long id; // 식별자 ID
     private String author; // 작성자
     private String contents; // 할 일

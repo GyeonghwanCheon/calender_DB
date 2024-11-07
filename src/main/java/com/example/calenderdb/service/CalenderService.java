@@ -7,13 +7,13 @@ import java.util.List;
 
 
 public interface CalenderService {
-    CalenderResponseDto saveCalender(CalenderRequestDto requestDto);
+    CalenderResponseDto saveCalender(CalenderRequestDto Dto);
 
-    List<CalenderResponseDto> findAllCalenders();
-
-    CalenderResponseDto findCalenderById(Long id);
-
-    CalenderResponseDto updateCalender(Long id, String author, String contents, String password);
-
-    void deleteCalender (Long id, String password);
+//    List<CalenderResponseDto> findAllCalenders();
+//
+//    CalenderResponseDto findCalenderById(Long id);
+//
+//    CalenderResponseDto updateCalender(Long id, String author, String contents, String password);
+//
+//    void deleteCalender (Long id, String password);
 }

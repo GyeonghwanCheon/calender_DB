@@ -1,9 +1,10 @@
 package com.example.calenderdb.dto;
 
 import com.example.calenderdb.entity.Calender;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-
+@AllArgsConstructor
 @Getter
 public class CalenderResponseDto {
 
@@ -18,6 +19,8 @@ public class CalenderResponseDto {
     private String createDate;
 
     private String changeDate;
+
+
 
     public CalenderResponseDto(Calender calender) {
         this.id = calender.getId();
