@@ -25,7 +25,7 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    // 일정 생성 API
+    // 일정 생성
     @Override
     public CalenderResponseDto saveCalender(Calender calender) {
         //INSERT Query를 직접 작성하지 않아도 됌.
@@ -47,13 +47,13 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository {
                 calender.getCreateDate(),calender.getChangeDate());
     }
 
-    // 일정 전체 조회 API
+    // 일정 전체 조회
     @Override
     public List<CalenderResponseDto> findAllCalenders() {
         return jdbcTemplate.query("select * from calenderdb order by changeDate desc", calenderRowMapper());
     }
 
-    // 일정 단건 조회 API
+    // 일정 단건 조회
     @Override
     public Calender findCalenderByIdOrElseThrow(Long id) {
         List<Calender> result = jdbcTemplate.query("select * from calenderdb where id = ?", calenderRowMapperV2(), id);
@@ -61,7 +61,7 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository {
         return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
     }
 
-    // 일정 수정 API
+    // 일정 수정
     @Override
     public int updateCalender(Long id, String author, String contents) {
 
@@ -75,7 +75,7 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository {
                 author, contents, formattedDate, id);
     }
 
-    // 일정 삭제 API
+    // 일정 삭제
     @Override
     public int deleteCalender(Long id) {
         return jdbcTemplate.update("delete from calenderdb where id = ?", id);

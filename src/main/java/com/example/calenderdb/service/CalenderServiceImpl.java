@@ -26,6 +26,7 @@ public class CalenderServiceImpl implements CalenderService {
     }
 
 
+    // 일정 생성
     @Override
     public CalenderResponseDto saveCalender(CalenderRequestDto dto) {
 
@@ -43,12 +44,13 @@ public class CalenderServiceImpl implements CalenderService {
         return calenderRepository.saveCalender(calender);
     }
 
+    // 일정 전체 조회
     @Override
     public List<CalenderResponseDto> findAllCalenders() {
         return calenderRepository.findAllCalenders();
     }
 
-
+    // 일정 단건 조회
     @Override
     public CalenderResponseDto findCalenderById(Long id) {
 
@@ -57,6 +59,7 @@ public class CalenderServiceImpl implements CalenderService {
         return new CalenderResponseDto(calender);
     }
 
+    // 일정 수정
     @Transactional
     @Override
     public CalenderResponseDto updateCalender(Long id, String author, String contents, String password) {
@@ -84,7 +87,7 @@ public class CalenderServiceImpl implements CalenderService {
     }
 
 
-
+    // 일정 삭제
     @Override
     public void deleteCalender(Long id, String password) {
 
